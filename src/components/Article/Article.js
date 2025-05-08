@@ -2,7 +2,7 @@ import styles from './Article.module.scss'
 import { truncateText } from '../../helpers/truncateText'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
-export default function Article({ article }) {
+export default function Article({ article, isFullPage = false }) {
   const title = article.title
   const text = truncateText(article.description, 180)
   const likes = article.favoritesCount
@@ -10,7 +10,9 @@ export default function Article({ article }) {
   const date = format(new Date(article.createdAt), 'MMMM d, yyyy')
   const avatarUrl = article.author.image
   return (
-    <div className={styles.Article}>
+    <div
+      className={`${styles.Article} ${!isFullPage ? styles['Article--shadow'] : ''}`}
+    >
       <div className={styles.content}>
         <div className={styles.upline}>
           <h3 className={styles.title}>{title}</h3>
@@ -32,6 +34,7 @@ export default function Article({ article }) {
   )
 }
 Article.propTypes = {
+  isFullPage: PropTypes.bool.isRequired,
   article: PropTypes.shape({
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,

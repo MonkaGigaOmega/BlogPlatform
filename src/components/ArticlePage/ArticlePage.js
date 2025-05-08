@@ -3,7 +3,8 @@ import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchArticleBySlug } from '../../redux/actions/articleActions'
 import MarkdownIt from 'markdown-it'
-import './ArticlePage.css'
+import Article from '../Article/Article'
+import styles from './ArticlePage.module.scss'
 
 const ArticlePage = () => {
   const dispatch = useDispatch()
@@ -34,12 +35,11 @@ const ArticlePage = () => {
   const articleContent = md.render(fixedBody)
 
   return (
-    <div>
-      <h1>{article.title}</h1>
-      <div
-        className="article-content"
-        dangerouslySetInnerHTML={{ __html: articleContent }}
-      />
+    <div className={styles.page}>
+      <div className={styles.content}>
+        <Article article={article} isFullPage className={styles.Article} />
+        <div dangerouslySetInnerHTML={{ __html: articleContent }} />
+      </div>
     </div>
   )
 }
