@@ -2,11 +2,13 @@ import styles from './ArticleList.module.scss'
 import Article from '../Article/Article'
 import { Pagination } from 'antd'
 import { useSelector, useDispatch } from 'react-redux'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import fetchArticles from '../../redux/actions/articleActions'
-
+import { useSearchParams } from 'react-router-dom'
 export default function ArticleList() {
-  const [currentPage, setCurrentPage] = useState(1)
+  useSearchParams()
+  const [searchParams, setSearchParams] = useSearchParams()
+  const currentPage = Number(searchParams.get('page')) || 1
   const dispatch = useDispatch()
 
   useEffect(() => {
@@ -19,7 +21,7 @@ export default function ArticleList() {
   const error = useSelector((state) => state.articles.error)
 
   const handlePageChange = (page) => {
-    setCurrentPage(page)
+    setSearchParams({ page })
   }
 
   if (loading) {
