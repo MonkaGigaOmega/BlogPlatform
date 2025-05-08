@@ -17,7 +17,7 @@ export default function Article({ article, isFullPage = false }) {
     >
       <div className={styles.content}>
         <div className={styles.upline}>
-          <Link to={`/articles/${slug}`}>
+          <Link className={styles.link} to={`/articles/${slug}`}>
             <h3 className={styles.title}>{title}</h3>
           </Link>
           &#9825; {likes}
