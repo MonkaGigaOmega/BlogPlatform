@@ -1,4 +1,3 @@
-/* eslint-disable no-unused-vars */
 import styles from './ArticleList.module.scss';
 import Article from '../Article/Article';
 import { Pagination } from 'antd';
