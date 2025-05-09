@@ -11,6 +11,7 @@ export default function Article({ article, isFullPage = false }) {
   const date = format(new Date(article.createdAt), 'MMMM d, yyyy')
   const avatarUrl = article.author.image
   const slug = article.slug
+  const is = false
   return (
     <div
       className={`${styles.Article} ${!isFullPage ? styles['Article--shadow'] : ''}`}
@@ -20,7 +21,8 @@ export default function Article({ article, isFullPage = false }) {
           <Link className={styles.link} to={`/articles/${slug}`}>
             <h3 className={styles.title}>{title}</h3>
           </Link>
-          &#9825; {likes}
+          <button className={`${styles.like}  ${is && styles.likeActive}`} />
+          {likes}
         </div>
         <div className={styles.tags}>tags</div>
         <p>{text}</p>

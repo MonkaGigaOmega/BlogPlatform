@@ -32,6 +32,7 @@ export default function SignInPage() {
     <div className={styles.page}>
       <div className={styles.formWrapper}>
         <form onSubmit={handleSubmit(onSubmit)}>
+          {error && <p className={styles.errorText}>{error}</p>}
           <h3 className={styles.title}>Sign In</h3>
 
           <label>

@@ -33,7 +33,17 @@ export const loginUser = ({ email, password }) => {
       const data = await response.json()
       dispatch({ type: LOGIN_USER_SUCCESS, payload: data.user })
     } catch (error) {
-      dispatch({ type: LOGIN_USER_FAILURE, payload: error.message })
+      let message = error.message
+      try {
+        const parsed = JSON.parse(error.message)
+        message = Object.entries(parsed)
+          .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
+          .join(' ')
+      } catch {
+        // error.message не JSON, оставляем как есть
+      }
+
+      dispatch({ type: LOGIN_USER_FAILURE, payload: message })
     }
   }
 }
