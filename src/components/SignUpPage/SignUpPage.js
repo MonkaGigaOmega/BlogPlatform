@@ -1,8 +1,14 @@
 import styles from './SignUpPage.module.scss'
 import { Link } from 'react-router-dom'
 import { useForm } from 'react-hook-form'
-
+import { registerUser } from '../../redux/actions/registerUser'
+import { useDispatch, useSelector } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
+import { useEffect } from 'react'
 export default function SignUpPage() {
+  const dispatch = useDispatch()
+  const navigate = useNavigate()
+  const { isLoading, error, user } = useSelector((state) => state.user)
   const {
     register,
     handleSubmit,
@@ -12,11 +18,18 @@ export default function SignUpPage() {
   const password = watch('password')
 
   const onSubmit = (data) => {
-    console.log(data)
+    const { username, email, password } = data
+    dispatch(registerUser({ username, email, password }))
   }
+  useEffect(() => {
+    if (user) {
+      navigate('/')
+    }
+  }, [user, navigate])
 
   return (
     <div className={styles.page}>
+      {error && <p className={styles.errorText}>{error}</p>}
       <div className={styles.formWrapper}>
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3 className={styles.title}>Create new account</h3>
@@ -124,9 +137,9 @@ export default function SignUpPage() {
           <button
             type="submit"
             className={`${styles.formButton} ${!isValid ? styles.disabledButton : ''}`}
-            disabled={!isValid}
+            disabled={!isValid || isLoading}
           >
-            Create
+            {isLoading ? 'Loading...' : 'Create'}
           </button>
 
           <p className={styles.signUpText}>
