@@ -6,6 +6,16 @@ export default function Header() {
       <Link className={styles.link} to={`/articles/`}>
         <h6 className={styles.blogName}>Realworld Blog</h6>
       </Link>
+
+      <Link className={styles.link} to={`/profile`}>
+        <button
+          type="button"
+          className={`${styles.button} ${styles.buttonGreen}`}
+        >
+          profile
+        </button>
+      </Link>
+
       <div className={styles.buttons}>
         <Link className={styles.link} to={`/sign-in`}>
           <button type="button" className={styles.button}>
