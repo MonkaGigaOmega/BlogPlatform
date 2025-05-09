@@ -40,3 +40,26 @@
   color: inherit;
   border: none;
 }
+.authButtons {
+  display: flex;
+  gap: 27px;
+  margin-right: 20px;
+  align-items: center;
+}
+.buttonBordered {
+  border: 1px solid black;
+  border-radius: 5px;
+}
+.avatar {
+  width: 46px;
+  height: 46px;
+  border-radius: 50%;
+}
+.buttonCreate {
+  width: 112px;
+  font-size: 14px;
+  border: 1px solid #52c41a;
+  height: 31px;
+  color: #52c41a;
+  border-radius: 5px;
+}

@@ -3,7 +3,7 @@ import {
   REGISTER_USER_REQUEST,
   REGISTER_USER_SUCCESS,
 } from '../actions/registerUser'
-
+import { LOG_OUT } from '../actions/logoutUser'
 const initialState = {
   isLoading: false,
   user: null,
@@ -18,6 +18,8 @@ export default function userReducer(state = initialState, action) {
       return { ...state, isLoading: false, user: action.payload }
     case REGISTER_USER_FAILURE:
       return { ...state, isLoading: false, error: action.payload }
+    case LOG_OUT:
+      return { ...state, user: null }
     default:
       return state
   }

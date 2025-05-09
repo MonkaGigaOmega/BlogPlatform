@@ -75,7 +75,7 @@ input[type='checkbox'] {
   &:checked + .checkbox::before {
     content: '';
     background-color: #1890ff;
-    background-image: url(../../../pics/icons8-галочка.svg);
+    background-image: url(../../pics/icons8-галочка.svg);
     background-repeat: no-repeat;
     background-position: center;
     background-size: 20px 20px;
@@ -132,4 +132,11 @@ input[type='checkbox'] {
 }
 .disabledButton:hover {
   background-color: #8c8c8c;
+}
+.registerError {
+  color: #f5222d;
+  font-size: 18px;
+  display: flex;
+  justify-content: center;
+  text-align: center;
 }

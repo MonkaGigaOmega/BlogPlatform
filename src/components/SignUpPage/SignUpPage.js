@@ -29,8 +29,8 @@ export default function SignUpPage() {
 
   return (
     <div className={styles.page}>
-      {error && <p className={styles.errorText}>{error}</p>}
       <div className={styles.formWrapper}>
+        {error && <p className={styles.registerError}>{error}</p>}
         <form onSubmit={handleSubmit(onSubmit)}>
           <h3 className={styles.title}>Create new account</h3>
 
