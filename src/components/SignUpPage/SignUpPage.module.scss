@@ -103,7 +103,7 @@ input[type='checkbox'] {
 }
 .checkboxWrapper {
   border-top: 1px solid lightgray;
-  margin-top: 31px;
+  margin-top: 21px;
   padding-top: 11px;
   display: flex;
   flex-direction: row-reverse;
@@ -117,4 +117,19 @@ input[type='checkbox'] {
   text-decoration: none;
   color: inherit;
   border: none;
+}
+.inputError {
+  border: 1px solid #f5222d;
+}
+.errorText {
+  color: #f5222d;
+  margin-top: 1px;
+  font-size: 14px;
+}
+.disabledButton {
+  background-color: #8c8c8c;
+  cursor: not-allowed;
+}
+.disabledButton:hover {
+  background-color: #8c8c8c;
 }
