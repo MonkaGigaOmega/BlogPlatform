@@ -1,4 +1,5 @@
 import styles from './SignInPage.module.scss'
+import { Link } from 'react-router-dom'
 export default function SignInPage() {
   return (
     <div className={styles.page}>
@@ -16,7 +17,7 @@ export default function SignInPage() {
           <label>
             <p className={styles.inputName}>Password</p>
             <input
-              type="text"
+              type="password"
               className={styles.input}
               placeholder="Password"
             />
@@ -26,7 +27,12 @@ export default function SignInPage() {
           </button>
           <p className={styles.signUpText}>
             Don’t have an account?
-            <span className={styles.blueText}>Sign Up</span>.
+            <span className={styles.blueText}>
+              <Link className={styles.link} to={`/sign-up`}>
+                Sign Up
+              </Link>
+            </span>
+            .
           </p>
         </form>
       </div>
