@@ -32,15 +32,20 @@ export const loginUser = ({ email, password }) => {
 
       const data = await response.json()
       dispatch({ type: LOGIN_USER_SUCCESS, payload: data.user })
+      localStorage.setItem('user', JSON.stringify(data.user))
     } catch (error) {
       let message = error.message
+
       try {
         const parsed = JSON.parse(error.message)
         message = Object.entries(parsed)
-          .map(([field, messages]) => `${field}: ${messages.join(', ')}`)
-          .join(' ')
+          .map(
+            ([field, msg]) =>
+              `${field}: ${Array.isArray(msg) ? msg.join(', ') : msg}`
+          )
+          .join(', ')
       } catch {
-        // error.message не JSON, оставляем как есть
+        // error.message не JSON — оставить как есть
       }
 
       dispatch({ type: LOGIN_USER_FAILURE, payload: message })
