@@ -7,8 +7,40 @@ export default function ProfilePage() {
     formState: { errors },
   } = useForm({ mode: 'onChange' })
 
-  const onSubmit = (data) => {
-    console.log(data) // пока просто выводим данные
+  const onSubmit = async (data) => {
+    const token = localStorage.getItem('token')
+    if (!token) {
+      console.error('Нет токена — пользователь не авторизован!')
+      return
+    }
+
+    const userData = {
+      username: data.username,
+      email: data.email,
+      ...(data.password && { password: data.password }),
+      ...(data.image && { image: data.image }),
+    }
+
+    try {
+      const res = await fetch('https://blog-platform.kata.academy/api/user', {
+        method: 'PUT',
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Token ${token}`,
+        },
+        body: JSON.stringify({ user: userData }),
+      })
+
+      const result = await res.json()
+
+      if (!res.ok) {
+        throw result
+      }
+
+      console.log('Updated user:', result.user)
+    } catch (err) {
+      console.error('Ошибка обновления:', err)
+    }
   }
 
   return (
@@ -34,7 +66,7 @@ export default function ProfilePage() {
           <label>
             <p className={styles.inputName}>Email address</p>
             <input
-              type="password"
+              type="email"
               className={styles.input}
               placeholder="Email address"
               {...register('email', {
@@ -55,15 +87,38 @@ export default function ProfilePage() {
               type="password"
               className={styles.input}
               placeholder="New password"
+              {...register('password', {
+                minLength: {
+                  value: 6,
+                  message: 'Password must be at least 6 characters',
+                },
+                maxLength: {
+                  value: 40,
+                  message: 'Password must be no more than 40 characters',
+                },
+              })}
             />
+            {errors.password && (
+              <p className={styles.errorText}>{errors.password.message}</p>
+            )}
           </label>
           <label>
             <p className={styles.inputName}>Avatar image (url)</p>
             <input
-              type="password"
+              type="text"
               className={styles.input}
               placeholder="Avatar image"
+              {...register('image', {
+                pattern: {
+                  value:
+                    /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp|tiff|ico))$/i,
+                  message: 'Invalid image URL',
+                },
+              })}
             />
+            {errors.image && (
+              <p className={styles.errorText}>{errors.image.message}</p>
+            )}
           </label>
           <button type="submit" className={styles.formButton}>
             Save

@@ -3,7 +3,7 @@ import { truncateText } from '../../helpers/truncateText'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-
+import defaultAvatar from '../../pics/av.jpg'
 export default function Article({ article, isFullPage = false }) {
   const likes = article.favoritesCount
   const slug = article.slug
@@ -35,7 +35,7 @@ export default function Article({ article, isFullPage = false }) {
           </div>
           <img
             alt="avatar"
-            src={article.author.image}
+            src={article.author.image || defaultAvatar}
             className={styles.avatar}
           />
         </div>

@@ -47,12 +47,14 @@ export default function Header() {
               alt="avatar"
             />
           </Link>
-          <button
-            className={`${styles.button} ${styles.buttonBordered}`}
-            onClick={handleLogout}
-          >
-            Log Out
-          </button>
+          <Link className={styles.link} to={`/articles/`}>
+            <button
+              className={`${styles.button} ${styles.buttonBordered}`}
+              onClick={handleLogout}
+            >
+              Log Out
+            </button>
+          </Link>
         </div>
       )}
     </header>

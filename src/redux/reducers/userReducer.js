@@ -38,6 +38,12 @@ export default function userReducer(state = initialState, action) {
         error: null,
         isLoading: false,
       }
+    case 'UPDATE_USER':
+      return {
+        ...state,
+        user: action.payload,
+      }
+
     default:
       return state
   }
