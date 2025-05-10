@@ -1,11 +1,33 @@
 import styles from './ProfilePage.module.scss'
 import { useForm } from 'react-hook-form'
+import { useDispatch, useSelector } from 'react-redux'
+import { useEffect } from 'react'
+
 export default function ProfilePage() {
+  const user = useSelector((state) => state.user && state.user.user)
+
+  const dispatch = useDispatch()
   const {
     register,
     handleSubmit,
     formState: { errors },
-  } = useForm({ mode: 'onChange' })
+    reset,
+  } = useForm({
+    mode: 'onChange',
+    defaultValues: {
+      username: user?.username || '',
+      email: user?.email || '',
+    },
+  })
+
+  useEffect(() => {
+    if (user) {
+      reset({
+        username: user.username,
+        email: user.email,
+      })
+    }
+  }, [user, reset])
 
   const onSubmit = async (data) => {
     const token = localStorage.getItem('token')
@@ -38,6 +60,8 @@ export default function ProfilePage() {
       }
 
       console.log('Updated user:', result.user)
+      dispatch({ type: 'UPDATE_USER', payload: result.user })
+      localStorage.setItem('user', JSON.stringify(result.user))
     } catch (err) {
       console.error('Ошибка обновления:', err)
     }
@@ -110,8 +134,7 @@ export default function ProfilePage() {
               placeholder="Avatar image"
               {...register('image', {
                 pattern: {
-                  value:
-                    /^(https?:\/\/.*\.(?:png|jpg|jpeg|gif|svg|webp|bmp|tiff|ico))$/i,
+                  value: /^(https?:)?\/\/.+/i,
                   message: 'Invalid image URL',
                 },
               })}
