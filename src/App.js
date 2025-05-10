@@ -5,7 +5,14 @@ import ArticlePage from './components/ArticlePage/ArticlePage'
 import SignUpPage from './components/SignUpPage/SignUpPage'
 import SignInPage from './components/SignInPage/SignInPage'
 import ProfilePage from './components/ProfilePage/ProfilePage'
+import { useDispatch } from 'react-redux'
+import { loadUserFromStorage } from './redux/actions/loadUser'
+import { useEffect } from 'react'
 function App() {
+  const dispatch = useDispatch()
+  useEffect(() => {
+    dispatch(loadUserFromStorage())
+  }, [dispatch])
   return (
     <>
       <Header></Header>

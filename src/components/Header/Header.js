@@ -37,12 +37,16 @@ export default function Header() {
               Create Article
             </button>
           </Link>
-          <span>{user.username}</span>
-          <img
-            src={user.image || defaultAvatar}
-            className={styles.avatar}
-            alt="avatar"
-          />
+          <Link className={styles.link} to={`/profile`}>
+            <span>{user.username}</span>
+          </Link>
+          <Link className={styles.link} to={`/profile`}>
+            <img
+              src={user.image || defaultAvatar}
+              className={styles.avatar}
+              alt="avatar"
+            />
+          </Link>
           <button
             className={`${styles.button} ${styles.buttonBordered}`}
             onClick={handleLogout}

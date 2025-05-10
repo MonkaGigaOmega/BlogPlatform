@@ -3,15 +3,11 @@ import { truncateText } from '../../helpers/truncateText'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
+
 export default function Article({ article, isFullPage = false }) {
-  const title = article.title
-  const text = truncateText(article.description, 180)
   const likes = article.favoritesCount
-  const author = article.author.username
-  const date = format(new Date(article.createdAt), 'MMMM d, yyyy')
-  const avatarUrl = article.author.image
   const slug = article.slug
-  const is = false
+  const isLiked = false
   return (
     <div
       className={`${styles.Article} ${!isFullPage ? styles['Article--shadow'] : ''}`}
@@ -19,26 +15,35 @@ export default function Article({ article, isFullPage = false }) {
       <div className={styles.content}>
         <div className={styles.upline}>
           <Link className={styles.link} to={`/articles/${slug}`}>
-            <h3 className={styles.title}>{title}</h3>
+            <h3 className={styles.title}>{article.title}</h3>
           </Link>
-          <button className={`${styles.like}  ${is && styles.likeActive}`} />
+          <button
+            className={`${styles.like} ${isLiked && styles.likeActive}`}
+          />
           {likes}
         </div>
         <div className={styles.tags}>tags</div>
-        <p>{text}</p>
+        <p>{truncateText(article.description, 180)}</p>
       </div>
       <div className={styles.info}>
         <div className={styles.profile}>
           <div className={styles.authorWrapper}>
-            <div className={styles.author}>{author}</div>
-            <div className={styles.date}>{date}</div>
+            <div className={styles.author}>{article.author.username}</div>
+            <div className={styles.date}>
+              {format(new Date(article.createdAt), 'MMMM d, yyyy')}
+            </div>
           </div>
-          <img alt="avatar" src={avatarUrl} className={styles.avatar} />
+          <img
+            alt="avatar"
+            src={article.author.image}
+            className={styles.avatar}
+          />
         </div>
       </div>
     </div>
   )
 }
+
 Article.propTypes = {
   isFullPage: PropTypes.bool.isRequired,
   article: PropTypes.shape({

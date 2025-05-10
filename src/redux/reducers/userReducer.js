@@ -9,7 +9,7 @@ import {
   LOGIN_USER_SUCCESS,
   LOGIN_USER_FAILURE,
 } from '../actions/loginUser'
-import LOAD_USER_FROM_STORAGE from '../actions/loadUser'
+import { LOAD_USER_FROM_STORAGE } from '../actions/loadUser'
 const initialState = {
   isLoading: false,
   user: null,
@@ -31,6 +31,13 @@ export default function userReducer(state = initialState, action) {
       return { ...state, user: null }
     case LOAD_USER_FROM_STORAGE:
       return { ...state, user: action.payload }
+    case 'LOGOUT_USER':
+      return {
+        ...state,
+        user: null,
+        error: null,
+        isLoading: false,
+      }
     default:
       return state
   }
