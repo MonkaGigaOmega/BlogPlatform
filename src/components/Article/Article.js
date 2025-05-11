@@ -4,6 +4,7 @@ import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../pics/av.jpg'
+import { Button, message, Popconfirm } from 'antd'
 export default function Article({
   article,
   isFullPage = false,
@@ -13,6 +14,16 @@ export default function Article({
   const slug = article.slug
   const tagList = article.tagList
   const isLiked = false
+
+  const confirm = (e) => {
+    console.log(e)
+    message.success('Click on Yes')
+  }
+
+  const cancel = (e) => {
+    console.log(e)
+    message.error('Click on No')
+  }
 
   return (
     <div
@@ -62,9 +73,19 @@ export default function Article({
         </div>
         {isAuthor && (
           <div className={styles.buttons}>
-            <button className={`${styles.button} ${styles.buttonDelete}`}>
-              Delete
-            </button>
+            <Popconfirm
+              title="Delete the task"
+              description="Are you sure to delete this task?"
+              onConfirm={confirm}
+              onCancel={cancel}
+              okText="Yes"
+              cancelText="No"
+            >
+              <Button className={`${styles.button} ${styles.buttonDelete}`}>
+                Delete
+              </Button>
+            </Popconfirm>
+
             <Link to={`/articles/${slug}/edit`}>
               <button className={`${styles.button} ${styles.buttonEdit}`}>
                 Edit
