@@ -50,6 +50,7 @@
   width: 46px;
   height: 46px;
   border-radius: 50%;
+  margin-bottom: 30px;
 }
 .profile {
   display: flex;
@@ -78,4 +79,37 @@
 }
 .likeActive {
   background-image: url('../../pics/heartRED.svg');
+}
+.buttons {
+  display: flex;
+  gap: 12px;
+}
+.button {
+  font-size: 14px;
+  padding: 6px 17px;
+  border: 1px solid lightgray;
+  border-radius: 5px;
+  background-color: white;
+}
+.buttonDelete {
+  color: #f63e47;
+  border-color: #f63e47;
+}
+.buttonEdit {
+  color: #52c41a;
+  border-color: #52c41a;
+}
+.tagItem {
+  color: #808080;
+  border: 1px solid #808080;
+  padding: 1px 6px 3px 6px;
+  border-radius: 3px;
+  font-size: 12px;
+}
+.tags {
+  display: flex;
+  gap: 6px;
+}
+.description {
+  color: #808080;
 }

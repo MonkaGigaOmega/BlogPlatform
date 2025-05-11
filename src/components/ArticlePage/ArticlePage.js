@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react'
+import { useEffect } from 'react'
 import { useParams } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
 import { fetchArticleBySlug } from '../../redux/actions/articleActions'
@@ -14,16 +14,18 @@ const ArticlePage = () => {
     dispatch(fetchArticleBySlug(slug))
   }, [slug, dispatch])
 
-  const currentUsername = useSelector((state) => state.user.username)
   const article = useSelector((state) => state.articles.currentArticle)
   const loading = useSelector((state) => state.articles.loadingArticle)
   const error = useSelector((state) => state.articles.error)
+  const currentUser = useSelector((state) => state.user.user)
   if (loading) return <p>Загружается статья...</p>
   if (error) return <p>Произошла ошибка: {error}</p>
   if (!article) return <p>Статья не найдена.</p>
-  const isAuthor = currentUsername === article.author.username
-  console.log('currentUsername:', currentUsername)
-  console.log('article.author.username:', article?.author?.username)
+  const currentUsername = currentUser?.username
+  const isAuthor =
+    currentUsername && article?.author?.username
+      ? currentUsername === article.author.username
+      : false
 
   const md = new MarkdownIt({ html: true, linkify: true, typographer: true })
 

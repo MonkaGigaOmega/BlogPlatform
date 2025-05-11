@@ -13,7 +13,6 @@ export default function Article({
   const slug = article.slug
   const tagList = article.tagList
   const isLiked = false
-  console.log('isAuthor:', isAuthor)
 
   return (
     <div
@@ -30,18 +29,22 @@ export default function Article({
           {likes}
         </div>
         <div className={styles.tags}>
-          {tagList.length > 0 ? (
-            tagList.map((tag, index) => (
-              <span key={index} className={styles.tagItem}>
-                {tag}
-              </span>
-            ))
+          {tagList.filter((tag) => tag && tag.trim().length > 0).length > 0 ? (
+            tagList
+              .filter((tag) => tag && tag.trim().length > 0)
+              .map((tag, index) => (
+                <span key={index} className={styles.tagItem}>
+                  {tag}
+                </span>
+              ))
           ) : (
-            <p>No tags added</p> // Покажет, если тегов нет
+            <p>No tags added</p>
           )}
         </div>
 
-        <p>{truncateText(article.description, 180)}</p>
+        <div className={styles.description}>
+          {truncateText(article.description, 180)}
+        </div>
       </div>
       <div className={styles.info}>
         <div className={styles.profile}>
@@ -59,8 +62,14 @@ export default function Article({
         </div>
         {isAuthor && (
           <div className={styles.buttons}>
-            <button>Edit</button>
-            <button>Delete</button>
+            <button className={`${styles.button} ${styles.buttonDelete}`}>
+              Delete
+            </button>
+            <Link to={`/articles/${slug}/edit`}>
+              <button className={`${styles.button} ${styles.buttonEdit}`}>
+                Edit
+              </button>
+            </Link>
           </div>
         )}
       </div>

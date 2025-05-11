@@ -10,6 +10,7 @@ import { loadUserFromStorage } from './redux/actions/loadUser'
 import { useEffect } from 'react'
 import CreateArticle from './components/CreateArticle/CreateArticle'
 import PrivateRoute from './components/PrivateRoute'
+import EditArticle from './components/EditArticle/EditArticle'
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -33,6 +34,14 @@ function App() {
             </PrivateRoute>
           }
         ></Route>
+        <Route
+          path="/articles/:slug/edit"
+          element={
+            <PrivateRoute>
+              <EditArticle />
+            </PrivateRoute>
+          }
+        />
       </Routes>
     </>
   )
