@@ -8,6 +8,8 @@ import ProfilePage from './components/ProfilePage/ProfilePage'
 import { useDispatch } from 'react-redux'
 import { loadUserFromStorage } from './redux/actions/loadUser'
 import { useEffect } from 'react'
+import CreateArticle from './components/CreateArticle/CreateArticle'
+import PrivateRoute from './components/PrivateRoute'
 function App() {
   const dispatch = useDispatch()
   useEffect(() => {
@@ -23,7 +25,14 @@ function App() {
         <Route path="/sign-up" element={<SignUpPage />}></Route>
         <Route path="/sign-in" element={<SignInPage />}></Route>
         <Route path="/profile" element={<ProfilePage />}></Route>
-        <Route path="/create-article" element={<ProfilePage />}></Route>
+        <Route
+          path="/create-article"
+          element={
+            <PrivateRoute>
+              <CreateArticle />
+            </PrivateRoute>
+          }
+        ></Route>
       </Routes>
     </>
   )

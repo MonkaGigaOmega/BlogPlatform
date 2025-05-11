@@ -4,10 +4,17 @@ import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../pics/av.jpg'
-export default function Article({ article, isFullPage = false }) {
+export default function Article({
+  article,
+  isFullPage = false,
+  isAuthor = false,
+}) {
   const likes = article.favoritesCount
   const slug = article.slug
+  const tagList = article.tagList
   const isLiked = false
+  console.log('isAuthor:', isAuthor)
+
   return (
     <div
       className={`${styles.Article} ${!isFullPage ? styles['Article--shadow'] : ''}`}
@@ -22,7 +29,18 @@ export default function Article({ article, isFullPage = false }) {
           />
           {likes}
         </div>
-        <div className={styles.tags}>tags</div>
+        <div className={styles.tags}>
+          {tagList.length > 0 ? (
+            tagList.map((tag, index) => (
+              <span key={index} className={styles.tagItem}>
+                {tag}
+              </span>
+            ))
+          ) : (
+            <p>No tags added</p> // Покажет, если тегов нет
+          )}
+        </div>
+
         <p>{truncateText(article.description, 180)}</p>
       </div>
       <div className={styles.info}>
@@ -39,6 +57,12 @@ export default function Article({ article, isFullPage = false }) {
             className={styles.avatar}
           />
         </div>
+        {isAuthor && (
+          <div className={styles.buttons}>
+            <button>Edit</button>
+            <button>Delete</button>
+          </div>
+        )}
       </div>
     </div>
   )
@@ -46,7 +70,9 @@ export default function Article({ article, isFullPage = false }) {
 
 Article.propTypes = {
   isFullPage: PropTypes.bool.isRequired,
+  isAuthor: PropTypes.bool.isRequired,
   article: PropTypes.shape({
+    tagList: PropTypes.array.isRequired,
     slug: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,
     body: PropTypes.string.isRequired,

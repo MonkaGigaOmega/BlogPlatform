@@ -32,7 +32,7 @@ export default function Header() {
         </div>
       ) : (
         <div className={styles.authButtons}>
-          <Link to="/new-article" className={styles.link}>
+          <Link to="/create-article" className={styles.link}>
             <button className={`${styles.button} ${styles.buttonCreate}`}>
               Create Article
             </button>

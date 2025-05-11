@@ -10,8 +10,8 @@
   margin-left: auto;
   margin-right: auto;
   margin-top: 60px;
-  min-height: 374px;
-  width: 384px;
+  min-height: 701px;
+  width: 938px;
   background-color: white;
   box-shadow: 0px 0px 20px 0px lightgray;
   padding: 32px;
@@ -32,8 +32,20 @@
   height: 40px;
   font-size: 16px;
   padding-left: 12px;
-  max-width: 320px;
+  max-width: 874px;
   box-sizing: border-box;
+}
+.textarea {
+  width: 100%;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  height: 192px;
+  font-size: 16px;
+  padding-left: 12px;
+  max-width: 874px;
+  box-sizing: border-box;
+  resize: none;
+  padding-top: 10px;
 }
 .inputName {
   margin-top: 12px;
@@ -45,7 +57,7 @@
 .formButton {
   margin-top: 21px;
   margin-bottom: 8px;
-  width: 100%;
+  width: 320px;
   height: 40px;
   border: none;
   background-color: #1890ff;
@@ -55,4 +67,57 @@
 }
 .formButton:hover {
   background-color: #007aed;
+}
+.button {
+  width: 120px;
+  height: 40px;
+  border-radius: 5px;
+  background-color: white;
+  font-size: 16px;
+}
+.buttonDelete {
+  border: 1px solid #f5222d;
+  color: #f5222d;
+}
+.buttonAdd {
+  border: 1px solid #1890ff;
+  color: #1890ff;
+}
+
+.inputTag {
+  width: 300px;
+  border: 1px solid #d9d9d9;
+  border-radius: 5px;
+  height: 40px;
+  font-size: 16px;
+  padding-left: 12px;
+  max-width: 874px;
+  box-sizing: border-box;
+}
+.tagCreate {
+  display: flex;
+  gap: 20px;
+}
+.tagsMenu {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+.message {
+  align-items: center;
+  padding-top: 4px;
+  display: flex;
+  justify-content: center;
+  font-size: 18px;
+}
+.successfullyMessage {
+  color: green;
+}
+.errorMessage {
+  color: tomato;
+}
+.buttonWrapper {
+  display: flex;
+  align-items: center;
+  gap: 40px;
 }

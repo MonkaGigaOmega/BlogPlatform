@@ -14,13 +14,16 @@ const ArticlePage = () => {
     dispatch(fetchArticleBySlug(slug))
   }, [slug, dispatch])
 
+  const currentUsername = useSelector((state) => state.user.username)
   const article = useSelector((state) => state.articles.currentArticle)
   const loading = useSelector((state) => state.articles.loadingArticle)
   const error = useSelector((state) => state.articles.error)
-
   if (loading) return <p>Загружается статья...</p>
   if (error) return <p>Произошла ошибка: {error}</p>
   if (!article) return <p>Статья не найдена.</p>
+  const isAuthor = currentUsername === article.author.username
+  console.log('currentUsername:', currentUsername)
+  console.log('article.author.username:', article?.author?.username)
 
   const md = new MarkdownIt({ html: true, linkify: true, typographer: true })
 
@@ -37,7 +40,12 @@ const ArticlePage = () => {
   return (
     <div className={styles.page}>
       <div className={styles.content}>
-        <Article article={article} isFullPage className={styles.Article} />
+        <Article
+          article={article}
+          isFullPage
+          className={styles.Article}
+          isAuthor={isAuthor}
+        />
         <div dangerouslySetInnerHTML={{ __html: articleContent }} />
       </div>
     </div>
