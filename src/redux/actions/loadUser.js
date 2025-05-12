@@ -2,21 +2,17 @@ export const LOAD_USER_FROM_STORAGE = 'LOAD_USER_FROM_STORAGE'
 
 export const loadUserFromStorage = () => {
   return async (dispatch) => {
-    const token = localStorage.getItem('token') // Проверяем токен
-    const user = localStorage.getItem('user') // Проверяем пользователя
-
-    console.log('Token from storage:', token)
-    console.log('User from storage:', user)
+    const token = localStorage.getItem('token')
+    const user = localStorage.getItem('user')
 
     if (!token || !user) {
-      // Если нет токена или пользователя, ничего не делаем
       return
     }
 
     try {
       const res = await fetch('https://blog-platform.kata.academy/api/user', {
         headers: {
-          Authorization: `Token ${token}`, // Передаем токен в заголовке
+          Authorization: `Token ${token}`,
         },
       })
 

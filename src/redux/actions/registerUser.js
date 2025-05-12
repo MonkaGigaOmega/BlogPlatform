@@ -26,14 +26,9 @@ export const registerUser = (userData) => async (dispatch) => {
       throw new Error(message || 'Registration failed')
     }
 
-    // Сохраняем токен и пользователя в localStorage
     localStorage.setItem('token', data.user.token)
     localStorage.setItem('user', JSON.stringify(data.user))
 
-    console.log('Token saved:', localStorage.getItem('token'))
-    console.log('User saved:', localStorage.getItem('user'))
-
-    // Диспатчим успешную регистрацию
     dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user })
 
     dispatch(loadUserFromToken(data.user.token))

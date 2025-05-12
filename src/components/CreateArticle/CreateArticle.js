@@ -52,14 +52,11 @@ export default function CreateArticle() {
 
       if (response.ok) {
         setMessage('Article created successfully!')
-        console.log('Статья создана:', result)
       } else {
         setError(result.errors ? result.errors : 'Something went wrong.')
-        console.error('Ошибка:', result.errors)
       }
     } catch (error) {
       setError('Network error occurred.')
-      console.error('Сетевая ошибка:', error)
     }
   }
 

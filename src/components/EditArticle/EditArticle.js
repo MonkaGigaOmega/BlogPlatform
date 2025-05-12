@@ -8,7 +8,6 @@ export default function EditArticle() {
   const [loading, setLoading] = useState(true)
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
-  console.log(slug)
 
   const {
     register,
@@ -61,12 +60,10 @@ export default function EditArticle() {
           body: JSON.stringify(bodyToSend),
         }
       )
-      const result = await response.json()
-      console.log('Обновлено:', result)
+      await response.json()
       setMessage('Article edited successfully!')
     } catch (err) {
       setError('Network error occurred.')
-      console.error('Ошибка обновления:', err)
     }
   }
 

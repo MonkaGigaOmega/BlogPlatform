@@ -32,7 +32,6 @@ export default function ProfilePage() {
   const onSubmit = async (data) => {
     const token = localStorage.getItem('token')
     if (!token) {
-      console.error('Нет токена — пользователь не авторизован!')
       return
     }
 
@@ -59,11 +58,10 @@ export default function ProfilePage() {
         throw result
       }
 
-      console.log('Updated user:', result.user)
       dispatch({ type: 'UPDATE_USER', payload: result.user })
       localStorage.setItem('user', JSON.stringify(result.user))
     } catch (err) {
-      console.error('Ошибка обновления:', err)
+      // console.error('Ошибка обновления:', err)
     }
   }
 
