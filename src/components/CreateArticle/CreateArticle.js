@@ -1,11 +1,16 @@
 import { useForm, useFieldArray } from 'react-hook-form'
 import { useEffect, useState } from 'react'
 import styles from './CreateArticle.module.scss'
-
+import { Link } from 'react-router-dom'
 export default function CreateArticle() {
   const [message, setMessage] = useState('')
   const [error, setError] = useState('')
-  const { register, control, handleSubmit } = useForm({
+  const {
+    register,
+    control,
+    handleSubmit,
+    formState: { errors },
+  } = useForm({
     defaultValues: {
       title: '',
       description: '',
@@ -71,6 +76,7 @@ export default function CreateArticle() {
               placeholder="Title"
               {...register('title', { required: true })}
             />
+            {errors.title && <p className={styles.error}>Title is required</p>}
           </label>
 
           <label>
@@ -80,6 +86,9 @@ export default function CreateArticle() {
               placeholder="Short description"
               {...register('description', { required: true })}
             />
+            {errors.description && (
+              <p className={styles.error}>Description is required</p>
+            )}
           </label>
 
           <label>
@@ -90,16 +99,22 @@ export default function CreateArticle() {
               {...register('body', { required: true })}
             />
           </label>
-
+          {errors.body && <p className={styles.error}>Text is required</p>}
           <div className={styles.tagsMenu}>
             <p className={styles.inputName}>Tags</p>
             {fields.map((field, index) => (
               <div key={field.id} className={styles.tagCreate}>
-                <input
-                  className={styles.inputTag}
-                  placeholder="Tag"
-                  {...register(`tagList.${index}`)}
-                />
+                <div>
+                  {' '}
+                  <input
+                    className={styles.inputTag}
+                    placeholder="Tag"
+                    {...register(`tagList.${index}`, { required: true })}
+                  />
+                  {errors.tagList?.[index] && (
+                    <p className={styles.error}>Tag is required</p>
+                  )}
+                </div>
                 <button
                   type="button"
                   className={`${styles.button} ${styles.buttonDelete}`}
@@ -130,9 +145,21 @@ export default function CreateArticle() {
               </p>
             )}
             {message && (
-              <p className={`${styles.successfullyMessage} ${styles.message}`}>
-                {message}
-              </p>
+              <>
+                <p
+                  className={`${styles.successfullyMessage} ${styles.message}`}
+                >
+                  {message}
+                </p>
+                <Link to={'/'}>
+                  <button
+                    type="button"
+                    className={`${styles.formButton} ${styles.goHomeButton}`}
+                  >
+                    Go to home
+                  </button>
+                </Link>
+              </>
             )}
           </div>
         </form>

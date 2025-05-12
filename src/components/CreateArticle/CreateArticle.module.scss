@@ -112,6 +112,7 @@
 }
 .successfullyMessage {
   color: green;
+  border-bottom: 1px solid rgb(55, 200, 55);
 }
 .errorMessage {
   color: tomato;
@@ -120,4 +121,11 @@
   display: flex;
   align-items: center;
   gap: 40px;
+}
+.goHomeButton {
+  background-color: green;
+  width: 150px;
+}
+.goHomeButton:hover {
+  background-color: rgb(48, 151, 48);
 }

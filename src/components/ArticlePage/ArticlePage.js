@@ -17,17 +17,6 @@ const ArticlePage = () => {
   const article = useSelector((state) => state.articles.currentArticle)
   const loading = useSelector((state) => state.articles.loadingArticle)
   const error = useSelector((state) => state.articles.error)
-  const currentUser = useSelector((state) => state.user.user)
-  if (loading) return <p>Загружается статья...</p>
-  if (error) return <p>Произошла ошибка: {error}</p>
-  if (!article) return <p>Статья не найдена.</p>
-  const currentUsername = currentUser?.username
-  const isAuthor =
-    currentUsername && article?.author?.username
-      ? currentUsername === article.author.username
-      : false
-
-  const md = new MarkdownIt({ html: true, linkify: true, typographer: true })
 
   const fixMarkdown = (mdText) =>
     mdText
@@ -35,6 +24,11 @@ const ArticlePage = () => {
       .replace(/^(-|\+|\*)([^\s])/gm, '$1 $2') // пробел после маркера списка
       .replace(/^(\d+\.)[^\s]/gm, '$1 ') // пробел после цифры в списке
 
+  if (loading) return <p>Загружается статья...</p>
+  if (error) return <p>Произошла ошибка: {error}</p>
+  if (!article) return <p>Статья не найдена.</p>
+
+  const md = new MarkdownIt({ html: true, linkify: true, typographer: true })
   const rawBody = article.body || ''
   const fixedBody = fixMarkdown(rawBody)
   const articleContent = md.render(fixedBody)
@@ -46,7 +40,7 @@ const ArticlePage = () => {
           article={article}
           isFullPage
           className={styles.Article}
-          isAuthor={isAuthor}
+          isAuthor={article.author.username === article.author.username}
         />
         <div dangerouslySetInnerHTML={{ __html: articleContent }} />
       </div>

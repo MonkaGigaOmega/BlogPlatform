@@ -33,10 +33,8 @@ export const loginUser = ({ email, password }) => {
       const data = await response.json()
       dispatch({ type: LOGIN_USER_SUCCESS, payload: data.user })
 
-      // Сохраняем токен в localStorage
       localStorage.setItem('token', data.user.token)
 
-      // Также можно сохранять данные пользователя, если необходимо
       localStorage.setItem('user', JSON.stringify(data.user))
     } catch (error) {
       let message = error.message

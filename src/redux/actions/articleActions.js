@@ -3,9 +3,17 @@ export default function fetchArticles(page) {
     dispatch({ type: 'FETCH_ARTICLES_START' })
 
     try {
+      const token = localStorage.getItem('token')
       const res = await fetch(
-        `https://blog-platform.kata.academy/api/articles?limit=5&offset=${(page - 1) * 5}`
+        `https://blog-platform.kata.academy/api/articles?limit=5&offset=${(page - 1) * 5}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token && { Authorization: `Token ${token}` }),
+          },
+        }
       )
+
       if (!res.ok) throw new Error('Ошибка при загрузке статей')
 
       const data = await res.json()

@@ -5,6 +5,10 @@ import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
 import defaultAvatar from '../../pics/av.jpg'
 import { Button, message, Popconfirm } from 'antd'
+import { deleteArticle } from '../../helpers/deleteArticle'
+import { useNavigate } from 'react-router-dom'
+import { useSelector } from 'react-redux'
+
 export default function Article({
   article,
   isFullPage = false,
@@ -14,10 +18,18 @@ export default function Article({
   const slug = article.slug
   const tagList = article.tagList
   const isLiked = false
+  const navigate = useNavigate()
+  const token = useSelector((state) => state.user.user?.token)
 
-  const confirm = (e) => {
-    console.log(e)
-    message.success('Click on Yes')
+  const confirm = async () => {
+    try {
+      await deleteArticle(slug, token)
+      message.success('Article deleted')
+      navigate('/')
+    } catch (error) {
+      message.error('Failed to delete article')
+      console.error(error)
+    }
   }
 
   const cancel = (e) => {
@@ -80,6 +92,8 @@ export default function Article({
               onCancel={cancel}
               okText="Yes"
               cancelText="No"
+              placement="right"
+              сlassName={styles.customPop}
             >
               <Button className={`${styles.button} ${styles.buttonDelete}`}>
                 Delete

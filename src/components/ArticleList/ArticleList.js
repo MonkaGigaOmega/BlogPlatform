@@ -1,12 +1,12 @@
-import styles from './ArticleList.module.scss'
+import { useEffect } from 'react'
+import { useSelector, useDispatch } from 'react-redux'
+import { useSearchParams } from 'react-router-dom'
+import fetchArticles from '../../redux/actions/articleActions'
 import Article from '../Article/Article'
 import { Pagination } from 'antd'
-import { useSelector, useDispatch } from 'react-redux'
-import { useEffect } from 'react'
-import fetchArticles from '../../redux/actions/articleActions'
-import { useSearchParams } from 'react-router-dom'
+import styles from './ArticleList.module.scss'
+
 export default function ArticleList() {
-  useSearchParams()
   const [searchParams, setSearchParams] = useSearchParams()
   const currentPage = Number(searchParams.get('page')) || 1
   const dispatch = useDispatch()
@@ -24,13 +24,8 @@ export default function ArticleList() {
     setSearchParams({ page })
   }
 
-  if (loading) {
-    return <div>Loading...</div>
-  }
-
-  if (error) {
-    return <div>Error: {error}</div>
-  }
+  if (loading) return <div>Loading...</div>
+  if (error) return <div>Error: {error}</div>
 
   return (
     <div className={styles.ArticleList}>
@@ -38,7 +33,6 @@ export default function ArticleList() {
         <Article key={index} article={article} />
       ))}
       <Pagination
-        className={styles.Pagination}
         current={currentPage}
         total={articlesCount}
         pageSize={5}
