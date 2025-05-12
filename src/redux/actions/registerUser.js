@@ -1,3 +1,4 @@
+import { loadUserFromToken } from './loadUserFromToken'
 export const REGISTER_USER_REQUEST = 'REGISTER_USER_REQUEST'
 export const REGISTER_USER_SUCCESS = 'REGISTER_USER_SUCCESS'
 export const REGISTER_USER_FAILURE = 'REGISTER_USER_FAILURE'
@@ -25,8 +26,17 @@ export const registerUser = (userData) => async (dispatch) => {
       throw new Error(message || 'Registration failed')
     }
 
-    dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user })
+    // Сохраняем токен и пользователя в localStorage
+    localStorage.setItem('token', data.user.token)
     localStorage.setItem('user', JSON.stringify(data.user))
+
+    console.log('Token saved:', localStorage.getItem('token'))
+    console.log('User saved:', localStorage.getItem('user'))
+
+    // Диспатчим успешную регистрацию
+    dispatch({ type: REGISTER_USER_SUCCESS, payload: data.user })
+
+    dispatch(loadUserFromToken(data.user.token))
   } catch (error) {
     dispatch({ type: REGISTER_USER_FAILURE, payload: error.message })
   }
