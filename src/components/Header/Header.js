@@ -1,13 +1,16 @@
 import styles from './Header.module.scss'
 import { Link } from 'react-router-dom'
 import { useSelector, useDispatch } from 'react-redux'
+import { useNavigate } from 'react-router-dom'
 import { logoutUser } from '../../redux/actions/logoutUser'
-import defaultAvatar from '../../pics/av.jpg'
+import defaultAvatar from '../../pics/avatar.png'
 export default function Header() {
   const { user } = useSelector((state) => state.user)
+  const navigate = useNavigate()
   const dispatch = useDispatch()
   const handleLogout = () => {
     dispatch(logoutUser())
+    navigate('/articles')
   }
   return (
     <header className={styles.header}>
@@ -47,14 +50,12 @@ export default function Header() {
               alt="avatar"
             />
           </Link>
-          <Link className={styles.link} to={`/articles/`}>
-            <button
-              className={`${styles.button} ${styles.buttonBordered}`}
-              onClick={handleLogout}
-            >
-              Log Out
-            </button>
-          </Link>
+          <button
+            className={`${styles.button} ${styles.buttonBordered}`}
+            onClick={handleLogout}
+          >
+            Log Out
+          </button>
         </div>
       )}
     </header>

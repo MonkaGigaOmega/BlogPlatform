@@ -3,7 +3,7 @@ import { truncateText } from '../../helpers/truncateText'
 import { format } from 'date-fns'
 import PropTypes from 'prop-types'
 import { Link } from 'react-router-dom'
-import defaultAvatar from '../../pics/av.jpg'
+import defaultAvatar from '../../pics/avatar.png'
 import { Button, message, Popconfirm } from 'antd'
 import { deleteArticle } from '../../helpers/deleteArticle'
 import { useNavigate } from 'react-router-dom'
@@ -53,7 +53,9 @@ export default function Article({
       <div className={styles.content}>
         <div className={styles.upline}>
           <Link className={styles.link} to={`/articles/${slug}`}>
-            <h3 className={styles.title}>{article.title}</h3>
+            <h3 className={styles.title}>
+              {article.title > 0 ? article.title : 'No title'}
+            </h3>
           </Link>
           <button
             onClick={handleLikeToggle}
@@ -67,7 +69,7 @@ export default function Article({
               .filter((tag) => tag && tag.trim().length > 0)
               .map((tag, index) => (
                 <span key={index} className={styles.tagItem}>
-                  {tag}
+                  {truncateText(tag, 75)}
                 </span>
               ))
           ) : (
@@ -76,7 +78,7 @@ export default function Article({
         </div>
 
         <div className={styles.description}>
-          {truncateText(article.description, 180)}
+          {truncateText(article.description, 147)}
         </div>
       </div>
       <div className={styles.info}>

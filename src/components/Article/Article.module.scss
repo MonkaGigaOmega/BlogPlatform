@@ -24,8 +24,8 @@
 .upline {
   display: flex;
   gap: 10px;
-  text-align: center;
   align-items: center;
+  margin-bottom: 2px;
 }
 .title {
   line-height: 28px;
@@ -109,7 +109,9 @@
 .tags {
   display: flex;
   gap: 6px;
+  margin-bottom: 2px;
 }
 .description {
   color: #808080;
+  overflow-wrap: break-word;
 }

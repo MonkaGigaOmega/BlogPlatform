@@ -74,9 +74,16 @@ export default function CreateArticle() {
             <input
               className={styles.input}
               placeholder="Title"
-              {...register('title', { required: true })}
+              {...register('title', { required: true, maxLength: 100 })}
             />
-            {errors.title && <p className={styles.error}>Title is required</p>}
+            {errors.title?.type === 'required' && (
+              <p className={styles.error}>Title is required</p>
+            )}
+            {errors.title?.type === 'maxLength' && (
+              <p className={styles.error}>
+                Title must be at most 100 characters
+              </p>
+            )}
           </label>
 
           <label>
@@ -84,10 +91,15 @@ export default function CreateArticle() {
             <input
               className={styles.input}
               placeholder="Short description"
-              {...register('description', { required: true })}
+              {...register('description', { required: true, maxLength: 170 })}
             />
-            {errors.description && (
+            {errors.description?.type === 'required' && (
               <p className={styles.error}>Description is required</p>
+            )}
+            {errors.description?.type === 'maxLength' && (
+              <p className={styles.error}>
+                Description must be at most 170 characters
+              </p>
             )}
           </label>
 
@@ -109,10 +121,18 @@ export default function CreateArticle() {
                   <input
                     className={styles.inputTag}
                     placeholder="Tag"
-                    {...register(`tagList.${index}`, { required: true })}
+                    {...register(`tagList.${index}`, {
+                      required: true,
+                      maxLength: 50,
+                    })}
                   />
-                  {errors.tagList?.[index] && (
+                  {errors.tagList?.[index]?.type === 'required' && (
                     <p className={styles.error}>Tag is required</p>
+                  )}
+                  {errors.tagList?.[index]?.type === 'maxLength' && (
+                    <p className={styles.error}>
+                      Tag must be at most 50 characters
+                    </p>
                   )}
                 </div>
                 <button

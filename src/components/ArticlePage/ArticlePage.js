@@ -42,7 +42,10 @@ const ArticlePage = () => {
           className={styles.Article}
           isAuthor={article.author.username === article.author.username}
         />
-        <div dangerouslySetInnerHTML={{ __html: articleContent }} />
+        <div
+          className={styles.text}
+          dangerouslySetInnerHTML={{ __html: articleContent }}
+        />
       </div>
     </div>
   )

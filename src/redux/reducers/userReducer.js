@@ -28,16 +28,14 @@ export default function userReducer(state = initialState, action) {
     case LOGIN_USER_FAILURE:
       return { ...state, isLoading: false, error: action.payload }
     case LOG_OUT:
-      return { ...state, user: null }
-    case LOAD_USER_FROM_STORAGE:
-      return { ...state, user: action.payload }
-    case 'LOGOUT_USER':
       return {
         ...state,
         user: null,
         error: null,
         isLoading: false,
       }
+    case LOAD_USER_FROM_STORAGE:
+      return { ...state, user: action.payload }
     case 'UPDATE_USER':
       return {
         ...state,
