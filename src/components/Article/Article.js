@@ -54,7 +54,7 @@ export default function Article({
         <div className={styles.upline}>
           <Link className={styles.link} to={`/articles/${slug}`}>
             <h3 className={styles.title}>
-              {article.title.length > 0 ? article.title : 'No title'}
+              {article.title.trim().length > 0 ? article.title : 'No title'}
             </h3>
           </Link>
           <button
