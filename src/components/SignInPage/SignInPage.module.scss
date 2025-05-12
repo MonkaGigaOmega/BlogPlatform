@@ -83,3 +83,10 @@
 .inputError {
   border: 1px solid #f5222d;
 }
+.disabledButton {
+  background-color: #8c8c8c;
+  cursor: not-allowed;
+}
+.disabledButton:hover {
+  background-color: #8c8c8c;
+}
