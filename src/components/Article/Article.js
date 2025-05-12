@@ -8,7 +8,8 @@ import { Button, message, Popconfirm } from 'antd'
 import { deleteArticle } from '../../helpers/deleteArticle'
 import { useNavigate } from 'react-router-dom'
 import { useSelector } from 'react-redux'
-
+import { likeArticle, unlikeArticle } from '../../redux/actions/articleActions'
+import { useDispatch } from 'react-redux'
 export default function Article({
   article,
   isFullPage = false,
@@ -17,10 +18,10 @@ export default function Article({
   const likes = article.favoritesCount
   const slug = article.slug
   const tagList = article.tagList
-  const isLiked = false
   const navigate = useNavigate()
   const token = useSelector((state) => state.user.user?.token)
-
+  const dispatch = useDispatch()
+  const isLiked = article.favorited
   const confirm = async () => {
     try {
       await deleteArticle(slug, token)
@@ -37,6 +38,14 @@ export default function Article({
     message.error('Click on No')
   }
 
+  const handleLikeToggle = () => {
+    if (isLiked) {
+      dispatch(unlikeArticle(slug))
+    } else {
+      dispatch(likeArticle(slug))
+    }
+  }
+
   return (
     <div
       className={`${styles.Article} ${!isFullPage ? styles['Article--shadow'] : ''}`}
@@ -47,9 +56,10 @@ export default function Article({
             <h3 className={styles.title}>{article.title}</h3>
           </Link>
           <button
-            className={`${styles.like} ${isLiked && styles.likeActive}`}
+            onClick={handleLikeToggle}
+            className={`${styles.like} ${isLiked ? styles.likeActive : ''}`}
           />
-          {likes}
+          <span>{likes}</span>
         </div>
         <div className={styles.tags}>
           {tagList.filter((tag) => tag && tag.trim().length > 0).length > 0 ? (
@@ -116,6 +126,7 @@ Article.propTypes = {
   isFullPage: PropTypes.bool.isRequired,
   isAuthor: PropTypes.bool.isRequired,
   article: PropTypes.shape({
+    favorited: PropTypes.bool.isRequired,
     tagList: PropTypes.array.isRequired,
     slug: PropTypes.string.isRequired,
     title: PropTypes.string.isRequired,

@@ -32,7 +32,7 @@ const ArticlePage = () => {
   const rawBody = article.body || ''
   const fixedBody = fixMarkdown(rawBody)
   const articleContent = md.render(fixedBody)
-
+  console.log(article)
   return (
     <div className={styles.page}>
       <div className={styles.content}>

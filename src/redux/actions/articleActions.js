@@ -41,9 +41,17 @@ export function fetchArticleBySlug(slug) {
     dispatch({ type: 'FETCH_ARTICLE_START' })
 
     try {
+      const token = localStorage.getItem('token')
       const res = await fetch(
-        `https://blog-platform.kata.academy/api/articles/${slug}`
+        `https://blog-platform.kata.academy/api/articles/${slug}`,
+        {
+          headers: {
+            'Content-Type': 'application/json',
+            ...(token && { Authorization: `Token ${token}` }),
+          },
+        }
       )
+
       if (!res.ok) throw new Error('Ошибка при загрузке статьи')
 
       const data = await res.json()
@@ -53,6 +61,58 @@ export function fetchArticleBySlug(slug) {
       })
     } catch (err) {
       dispatch({ type: 'FETCH_ARTICLE_FAILURE', payload: err.message })
+    }
+  }
+}
+
+export function likeArticle(slug) {
+  return async (dispatch, getState) => {
+    const token = getState().user.user?.token
+    if (!token) return
+
+    try {
+      const res = await fetch(
+        `https://blog-platform.kata.academy/api/articles/${slug}/favorite`,
+        {
+          method: 'POST',
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      if (!res.ok) throw new Error('Ошибка при лайке')
+
+      const data = await res.json()
+      dispatch({ type: 'LIKE_ARTICLE_SUCCESS', payload: data.article })
+    } catch (err) {
+      console.error(err)
+    }
+  }
+}
+
+export function unlikeArticle(slug) {
+  return async (dispatch, getState) => {
+    const token = getState().user.user?.token
+    if (!token) return
+
+    try {
+      const res = await fetch(
+        `https://blog-platform.kata.academy/api/articles/${slug}/favorite`,
+        {
+          method: 'DELETE',
+          headers: {
+            Authorization: `Token ${token}`,
+            'Content-Type': 'application/json',
+          },
+        }
+      )
+      if (!res.ok) throw new Error('Ошибка при дизлайке')
+
+      const data = await res.json()
+      dispatch({ type: 'UNLIKE_ARTICLE_SUCCESS', payload: data.article })
+    } catch (err) {
+      console.error(err)
     }
   }
 }

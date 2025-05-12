@@ -1,10 +1,10 @@
 const initialState = {
-  articles: [], // для списка статей
-  loadingArticles: false, // состояние загрузки списка статей
-  loadingArticle: false, // состояние загрузки конкретной статьи
+  articles: [],
+  loadingArticles: false,
+  loadingArticle: false,
   error: null,
   articlesCount: 0,
-  currentArticle: null, // конкретная статья
+  currentArticle: null,
 }
 
 export default function articleReducer(state = initialState, action) {
@@ -40,6 +40,50 @@ export default function articleReducer(state = initialState, action) {
 
     case 'FETCH_ARTICLE_FAILURE':
       return { ...state, loadingArticle: false, error: action.payload }
+
+    case 'LIKE_ARTICLE_SUCCESS':
+      return {
+        ...state,
+        articles: state.articles.map((a) =>
+          a.slug === action.payload.slug
+            ? {
+                ...a,
+                favorited: true,
+                favoritesCount: action.payload.favoritesCount,
+              }
+            : a
+        ),
+        currentArticle:
+          state.currentArticle?.slug === action.payload.slug
+            ? {
+                ...state.currentArticle,
+                favorited: true,
+                favoritesCount: action.payload.favoritesCount,
+              }
+            : state.currentArticle,
+      }
+
+    case 'UNLIKE_ARTICLE_SUCCESS':
+      return {
+        ...state,
+        articles: state.articles.map((a) =>
+          a.slug === action.payload.slug
+            ? {
+                ...a,
+                favorited: false,
+                favoritesCount: action.payload.favoritesCount,
+              }
+            : a
+        ),
+        currentArticle:
+          state.currentArticle?.slug === action.payload.slug
+            ? {
+                ...state.currentArticle,
+                favorited: false,
+                favoritesCount: action.payload.favoritesCount,
+              }
+            : state.currentArticle,
+      }
 
     default:
       return state
